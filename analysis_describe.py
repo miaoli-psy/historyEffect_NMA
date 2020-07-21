@@ -24,10 +24,10 @@ one = ONE()
 one.search_terms()
 
 # list all dataset
-eids = one.search['_ibl_trials.*']
+eids = one.search(['_ibl_trials.*'])
 
 # try one session
-eid = eids[0]
+eid = eids[9]
 
 # see all data set types
 dset_types = one.list(eid)
@@ -39,9 +39,11 @@ choice = one.load_dataset(eid, dset_types[0])
 trials = one.load_object(eid, "_ibl_trials")
 for key, value in trials.items():
     print(key, value.shape)
+    
+
 
 #%% =============================================================================
-#plot 
+#sample plot -visualization 
 # =============================================================================
 out = []
 for sgn, contrast in ((-1, trials.contrastRight), (+1, trials.contrastLeft)):
@@ -56,3 +58,43 @@ plt.xlabel("Signed contrast (%)", fontsize = 15)
 plt.ylabel("Rightward choice (%)", fontsize = 15)
 plt.ylim(0, 100)
 plt.title("Psychometric curve for %s" % eid, fontsize = 15);
+
+#%% =============================================================================
+# intrested features
+# =============================================================================
+
+def cal_feature_choice(raw_choice):
+    '''
+    calcualte the number of choice 1 from 
+    past 10 trials
+    
+    arg*
+    raw_choice: array of int, eg (1009,)
+    
+    return
+    feature_choice: array of int, eg (1009-10,)
+    '''
+    pass
+    # return
+
+def cal_feature_stim_posi(raw_contrastLeft):
+    '''
+    calculate the number of stimulus that 
+    appeared on the left visual field
+    
+    arg*:
+    return*
+    feature_posi_num:
+    
+    '''
+    pass
+
+
+def cal_feature_stimu_contrast(raw_contrastLeft):
+    pass
+
+def cal_feature_fb(raw_fbtype):
+    pass
+
+def 
+
