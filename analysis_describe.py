@@ -59,42 +59,5 @@ plt.ylabel("Rightward choice (%)", fontsize = 15)
 plt.ylim(0, 100)
 plt.title("Psychometric curve for %s" % eid, fontsize = 15);
 
-#%% =============================================================================
-# intrested features
-# =============================================================================
 
-def cal_feature_choice(raw_choice):
-    '''
-    calcualte the number of choice 1 from 
-    past 10 trials
-    
-    arg*
-    raw_choice: array of int, eg (1009,)
-    
-    return
-    feature_choice: array of int, eg (1009-10,)
-    '''
-    pass
-    # return
-
-def cal_feature_stim_posi(raw_contrastLeft):
-    '''
-    calculate the number of stimulus that 
-    appeared on the left visual field
-    
-    arg*:
-    return*
-    feature_posi_num:
-    
-    '''
-    pass
-
-
-def cal_feature_stimu_contrast(raw_contrastLeft):
-    pass
-
-def cal_feature_fb(raw_fbtype):
-    pass
-
-def 
 
