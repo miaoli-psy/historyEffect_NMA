@@ -8,3 +8,7 @@
 /phylib
 /analysis
 /ibllib-repo
+/archive
+
+# files
+*.pdf
