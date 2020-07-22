@@ -37,6 +37,9 @@ choice = one.load_dataset(eid, dset_types[0])
 #f2
 stim_contrast_left = one.load_dataset(eid, dset_types[1])
 
+#f3
+fd_type = one.load_dataset(eid, dset_types[3])
+
 #y ture
 y_true = one.load_dataset(eid, dset_types[3])
 
@@ -126,13 +129,24 @@ def cal_feature_stim_posi(raw_contrastLeft):
 f2_array = cal_feature_stim_posi(stim_contrast_left)
 f2_array = np.array(f2_array)
 
+def cal_feature_fb(raw_fbtype):
+    '''
+    calculate the number of reward in the 
+    previous 10 trials
+    '''
+    count_feature = []
+    # count_feature = np.zeros(len(raw_choice)-9)
+    for i in range(9, len(raw_fbtype)):
+        res_count = count_num(raw_fbtype[i-9:i+1])
+        count_feature.append(res_count)
+    return count_feature
+
+f3_array = cal_feature_fb(fd_type)
+f3_array = np.array(f3_array)
+
 
 def cal_feature_stimu_contrast(raw_contrastLeft):
     pass
-
-def cal_feature_fb(raw_fbtype):
-    pass
-
 
 #%% =============================================================================
 # true values --> y
