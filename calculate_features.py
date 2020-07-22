@@ -30,7 +30,14 @@ eid = eids[10]
 dset_types = one.list(eid)
 
 # load a single dateset
+
+#f1
 choice = one.load_dataset(eid, dset_types[0])
+
+#f2
+stim_contrast_left = one.load_dataset(eid, dset_types[1])
+
+#y ture
 y_true = one.load_dataset(eid, dset_types[3])
 
 # load entire object
@@ -95,12 +102,29 @@ def cal_feature_stim_posi(raw_contrastLeft):
     calculate the number of stimulus that 
     appeared on the left visual field
     
-    arg*:
-    return*
-    feature_posi_num:
-    
     '''
-    pass
+    # find 0: 以前的contrast是0
+    where_0 = np.where(stim_contrast_left == 0)
+    
+    #把0改成-99
+    stim_contrast_left[where_0] = -99
+    
+    #以前contrast比0大-》刺激位置在左边
+    where_morethan_0 = np.where(stim_contrast_left > 0)
+    stim_contrast_left[where_morethan_0] = 1
+    
+    #以前是nan》刺激在右面
+    posi_is_left_array = np.nan_to_num(stim_contrast_left)
+    
+    count_feature = []
+    for i in range(9, len(posi_is_left_array)):
+        res_count = count_num(posi_is_left_array[i-9: i+1])
+        count_feature.append(res_count)
+
+    return count_feature
+
+f2_array = cal_feature_stim_posi(stim_contrast_left)
+f2_array = np.array(f2_array)
 
 
 def cal_feature_stimu_contrast(raw_contrastLeft):
