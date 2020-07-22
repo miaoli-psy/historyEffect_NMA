@@ -31,6 +31,7 @@ dset_types = one.list(eid)
 
 # load a single dateset
 choice = one.load_dataset(eid, dset_types[0])
+y_true = one.load_dataset(eid, dset_types[3])
 
 # load entire object
 trials = one.load_object(eid, "_ibl_trials")
@@ -114,3 +115,8 @@ def cal_feature_fb(raw_fbtype):
 # =============================================================================
 
 # calculate true values: eg: the respone of current trial is correct or not (0/1)
+for i, res in enumerate(y_true):
+    if res == -1:
+        y_true[i] = 0
+
+y_true = y_true[9:]
