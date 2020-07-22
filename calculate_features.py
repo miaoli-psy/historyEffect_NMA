@@ -44,9 +44,9 @@ fd_type = one.load_dataset(eid, dset_types[3])
 y_true = one.load_dataset(eid, dset_types[3])
 
 # load entire object
-trials = one.load_object(eid, "_ibl_trials")
-for key, value in trials.items():
-    print(key, value.shape)
+# trials = one.load_object(eid, "_ibl_trials")
+# for key, value in trials.items():
+#     print(key, value.shape)
 #%% =============================================================================
 # intrested features
 # =============================================================================
@@ -148,13 +148,36 @@ f3_array = np.array(f3_array)
 def cal_feature_stimu_contrast(raw_contrastLeft):
     pass
 
+
+def get_my_feature():
+    
+    f1 = cal_feature_choice(choice)
+    f1_array = np.array(f1)
+    
+    f2_array = cal_feature_stim_posi(stim_contrast_left)
+    f2_array = np.array(f2_array)
+
+    f3_array = cal_feature_fb(fd_type)
+    f3_array = np.array(f3_array)
+
+    my_features = np.column_stack((f1_array,f2_array,f3_array))
+    
+    return my_features
+
+# my_features = get_my_feature()
+
 #%% =============================================================================
 # true values --> y
 # =============================================================================
 
 # calculate true values: eg: the respone of current trial is correct or not (0/1)
-for i, res in enumerate(y_true):
-    if res == -1:
-        y_true[i] = 0
 
-y_true = y_true[9:]
+def get_y_ture():
+    for i, res in enumerate(y_true):
+        if res == -1:
+            y_true[i] = 0
+    
+    # y_true = y_true[9:]
+    return y_true[9:]
+
+# my_y_true = get_y_ture()
