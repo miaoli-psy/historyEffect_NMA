@@ -27,7 +27,7 @@ one.search_terms()
 eids = one.search(['_ibl_trials.*'])
 
 # try one session
-eid = eids[9]
+eid = eids[-1]
 
 # see all data set types
 dset_types = one.list(eid)
