@@ -21,6 +21,9 @@ import seaborn
 from ibllib.misc import pprint
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
+import calculate_features
+my_features = calculate_features.get_my_feature()
+my_y_true_array = calculate_features.get_my_ytrue()
 #%%=============================================================================
 
 # load data
