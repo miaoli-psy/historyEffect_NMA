@@ -8,4 +8,4 @@ Created on Wed Jul 22 20:15:03 2020
 import calculate_features
 
 my_features = calculate_features.get_my_feature()
-my_y_true   = calculate_features.get_y_ture()
+my_y_true_array = calculate_features.get_my_ytrue()
