@@ -34,14 +34,22 @@ dset_types = one.list(eid)
 #f1
 choice = one.load_dataset(eid, dset_types[0])
 
+# choice: 1->left; -1->right (change -1 to 2)
+for i, c in enumerate(choice):
+    if c == -1:
+        choice[i] = 2
+
 #f2
 stim_contrast_left = one.load_dataset(eid, dset_types[1])
 
 #f3
 fd_type = one.load_dataset(eid, dset_types[3])
 
-#y ture
+#y ture: correct or incorrect
 y_true = one.load_dataset(eid, dset_types[3])
+
+#y true 2: the choice : 1-> left; -1-> right (change to 2 ->right)
+y_true2 = one.load_dataset(eid, dset_types[0])
 
 # load entire object
 # trials = one.load_object(eid, "_ibl_trials")
@@ -91,13 +99,38 @@ def cal_feature_choice(raw_choice):
     # raw_choice = raw_choice.tolist()
     count_feature = []
     # count_feature = np.zeros(len(raw_choice)-9)
-    for i in range(9, len(raw_choice)):
-        res_count = count_num(raw_choice[i-9:i+1])
+    for i in range(10, len(raw_choice)):
+        res_count = count_num(raw_choice[i-10:i])
         count_feature.append(res_count)
     return count_feature
 
+
+# [0,1,2,3,4,5,6,7,8,9,10]
+# index == 10: [index:0, index:9]
+def get_past_trials_choice(raw_choice):
+    '''
+    calcualte features that the choice of 
+    the past 1-10 choice
+    '''
+    features_choice = [[], [], [],[],[],[],[],[],[],[]]
+    
+    for i in range(10, len(raw_choice)):
+        for i, num in enumerate(raw_choice[i-10:i]):
+            features_choice[i].append(num)
+    return features_choice
+
+
 f1 = cal_feature_choice(choice)
 f1_array = np.array(f1)
+
+# cal past choices
+f1_pastchoice = get_past_trials_choice(choice)
+
+#past choice to correct format n_trials * features
+f1_pastchoice =[[row[i] for row in f1_pastchoice] for i in range(len(f1_pastchoice[0]))]
+
+#to array
+f1_pastchoice = np.array(f1_pastchoice)
 
 
 def cal_feature_stim_posi(raw_contrastLeft):
@@ -120,7 +153,7 @@ def cal_feature_stim_posi(raw_contrastLeft):
     posi_is_left_array = np.nan_to_num(stim_contrast_left)
     
     count_feature = []
-    for i in range(9, len(posi_is_left_array)):
+    for i in range(10, len(posi_is_left_array)):
         res_count = count_num(posi_is_left_array[i-9: i+1])
         count_feature.append(res_count)
 
@@ -136,7 +169,7 @@ def cal_feature_fb(raw_fbtype):
     '''
     count_feature = []
     # count_feature = np.zeros(len(raw_choice)-9)
-    for i in range(9, len(raw_fbtype)):
+    for i in range(10, len(raw_fbtype)):
         res_count = count_num(raw_fbtype[i-9:i+1])
         count_feature.append(res_count)
     return count_feature
@@ -172,12 +205,17 @@ def get_my_feature():
 
 # calculate true values: eg: the respone of current trial is correct or not (0/1)
 
-def get_y_ture():
+def get_y_ture(y_true, y_true2):
     for i, res in enumerate(y_true):
         if res == -1:
             y_true[i] = 0
+    for i, y in enumerate(y_true2):
+        if y == -1:
+            y_true2[i] = 2
+    # y_true2 = y_true2
     
     # y_true = y_true[9:]
-    return y_true[9:]
+    return y_true[10:], y_true2[10:]
 
-# my_y_true = get_y_ture()
+my_y_true, my_y_true2 = get_y_ture(y_true, y_true2)
+
