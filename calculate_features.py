@@ -98,13 +98,13 @@ choice = dealwithminu1(choice)
 stim_contrast_left = one.load_dataset(eid, dset_types[1])
 
 # find 0: 以前的contrast是0
-where_0 = np.where(stim_contrast_left == 0)
+# where_0 = np.where(stim_contrast_left == 0)
 
 #把0改成-99
-stim_contrast_left[where_0] = -99
+# stim_contrast_left[where_0] = -99
 
 #以前contrast比0大-》刺激位置在左边
-where_morethan_0 = np.where(stim_contrast_left > 0)
+where_morethan_0 = np.where(stim_contrast_left >= 0)
 stim_contrast_left[where_morethan_0] = 1
 
 #以前是nan》刺激在右面
