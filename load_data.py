@@ -93,3 +93,12 @@ for eid in all_eid:
     
     my_ytrue = calculate_features.get_y_ture_array(y_true,y_true2)
     my_ytrue_full.append(my_ytrue)
+
+# =============================================================================
+# put all feature together
+# =============================================================================
+my_feature_full = np.concatenate(my_features_full, axis=0)
+my_ytrue_full   = np.concatenate(my_ytrue_full, axis=0)
+
+def get_all():
+    return my_feature_full, my_ytrue_full
