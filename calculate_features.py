@@ -7,12 +7,12 @@ Created on Tue Jul 21 20:02:32 2020
 #%% =============================================================================
 # import modules
 # =============================================================================
-from oneibl.onelight import ONE
+# from oneibl.onelight import ONE
 import numpy as np
 # import matplotlib.pyplot as plt
 # import seaborn
 # from ibllib.misc import pprint
-import copy
+# import copy
 
 #%% =============================================================================
 # useful funtions
@@ -70,71 +70,6 @@ def count_num(curr_nums:list) -> list:
     # return [count_minus_one, count_zero, count_one]
     return count_one
 
-#%%=============================================================================
-# load data
-# =============================================================================
-
-# create ONE object
-one = ONE()
-
-# list all dataset
-eids = one.search(['_ibl_trials.*'])
-
-# try one session
-eid = eids[10]
-
-# see all data set types
-dset_types = one.list(eid)
-
-# load a single dateset
-
-####f1
-choice = one.load_dataset(eid, dset_types[0])
-
-# choice: 1->left; -1->right (change -1 to 2)
-choice = dealwithminu1(choice)
-
-####f2
-stim_contrast_left = one.load_dataset(eid, dset_types[1])
-
-# find 0: 以前的contrast是0
-# where_0 = np.where(stim_contrast_left == 0)
-
-#把0改成-99
-# stim_contrast_left[where_0] = -99
-
-#以前contrast比0大-》刺激位置在左边
-where_morethan_0 = np.where(stim_contrast_left >= 0)
-stim_contrast_left[where_morethan_0] = 1
-
-#以前是nan》刺激在右面
-posi_is_left_array = np.nan_to_num(stim_contrast_left)
-
-stim_posi_array = copy.copy(posi_is_left_array)
-stim_posi_list = stim_posi_array.tolist()
-
-#change 0 to 2
-stim_posi_list = dealwith0(stim_posi_list)
-
-#change back to array
-stim_posi_array = np.array(stim_posi_list)
-
-####fb_type: 1->reward; -1->no reward (change -1 to 2)
-fb_type = one.load_dataset(eid, dset_types[3])
-fb_type = dealwithminu1(fb_type)
-
-#y ture: 1correct or 0incorrect (change 0 to 2)
-y_true = one.load_dataset(eid, dset_types[3])
-y_true = dealwithminu1(y_true)
-
-#y true 2: the choice : 1-> left; -1-> right (change to 2 ->right)
-y_true2 = one.load_dataset(eid, dset_types[0])
-y_true2 = dealwithminu1(y_true2)
-# load entire object
-# trials = one.load_object(eid, "_ibl_trials")
-# for key, value in trials.items():
-#     print(key, value.shape)
-
 #%% =============================================================================
 # calculate features
 # =============================================================================
@@ -173,7 +108,7 @@ def get_past_features(raw_choice):
 # get features
 # =============================================================================
 
-def get_my_feature():
+def get_my_feature(choice, posi_is_left_array,stim_posi_array, fb_type):
     '''
     f1_array: 前十个trial里小鼠选左的次数
     f1_pastchoice： 前十个trial中，第n个trial小鼠的选择； left(1), right(2)
@@ -243,16 +178,3 @@ def get_y_ture_array(y_true, y_true2):
     return: y_true array that can put into models
     '''
     return np.array(list(zip(y_true[10:],y_true2[10:])))
-
-#%% =============================================================================
-# get y treu
-# =============================================================================
-
-def get_my_ytrue():
-    '''
-    y_ture: correct (1); incorrect (2)
-    y_true2:mice choice left(1); choice right(2)
-    '''
-    return get_y_ture_array(y_true, y_true2)
-
-# yy2 = get_my_ytrue()
