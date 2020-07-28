@@ -14,21 +14,22 @@ Created on Tue Jul 21 20:02:32 2020
 #%% =============================================================================
 # import modules
 # =============================================================================
-from oneibl.onelight import ONE
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn
-from ibllib.misc import pprint
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
-import calculate_features
 import load_data
 
-
+#%% =============================================================================
+# set input X and y_true
+# =============================================================================
 features, y_trues = load_data.get_all()
 
 X = features
 y = y_trues[:,1]
+
+# =============================================================================
+# modeling
+# =============================================================================
 
 # First define the model
 log_reg = LogisticRegression(penalty="none")

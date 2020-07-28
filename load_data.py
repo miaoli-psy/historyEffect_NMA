@@ -25,11 +25,15 @@ for i, eid in enumerate(eids):
     t = eid.split('/')[0:-1][2]
     name.append(t)
 
-name_no_duplicate_set = set(name)
-
+# remove re-occuring names- order preserving
 name_no_duplicate = []
-for n in name_no_duplicate_set:
-    name_no_duplicate.append(n)
+[name_no_duplicate.append(i) for i in name if not name_no_duplicate.count(i)]
+
+# name_no_duplicate_set = set(name) #order not preserving
+
+# name_no_duplicate = []
+# for n in name_no_duplicate_set:
+#     name_no_duplicate.append(n)
 
 #find first data
 data_index = []
