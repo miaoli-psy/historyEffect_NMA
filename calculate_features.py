@@ -7,12 +7,7 @@ Created on Tue Jul 21 20:02:32 2020
 #%% =============================================================================
 # import modules
 # =============================================================================
-# from oneibl.onelight import ONE
 import numpy as np
-# import matplotlib.pyplot as plt
-# import seaborn
-# from ibllib.misc import pprint
-# import copy
 
 #%% =============================================================================
 # useful funtions
