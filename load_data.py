@@ -4,7 +4,7 @@ Created on Tue Jul 28 18:27:53 2020
 
 @author: Miao
 """
-# =============================================================================
+#%% =============================================================================
 # import modules
 # =============================================================================
 from oneibl.onelight import ONE
@@ -59,7 +59,7 @@ for i in e_index:
     eid = eids[i]
     all_eid_20_80.append(eid)
 
-new_name = []
+new_name = [] #len(new_name) -> 2716
 for i, eid in enumerate(all_eid_20_80):
     t = eid.split('/')[0:-1][2]
     new_name.append(t)
@@ -67,11 +67,18 @@ for i, eid in enumerate(all_eid_20_80):
 new_name_no_duplicate = []
 [new_name_no_duplicate.append(i) for i in new_name if not new_name_no_duplicate.count(i)]
 
-data_index_new = []
+data_index_new = [] #len(data_index_new) -> 88
 for n in new_name_no_duplicate:
     index_t = new_name.index(n)
     data_index_new.append(index_t)
-    
+
+# #判断每只小鼠在2716个trial中重复几次
+# mouse_rep_count = {}
+# for i in new_name:
+#     if new_name.count(i)>1:
+#         mouse_rep_count[i] = new_name.count(i)
+# print (mouse_rep_count)
+
 all_eid_new = []
 for i in data_index_new:
     eid = eids[i]
