@@ -22,17 +22,23 @@ import load_data
 #%% =============================================================================
 # set input X and y_true
 # =============================================================================
-features, y_trues = load_data.get_all()
+# features, y_trues = load_data.get_first_section()
+features, y_trues = load_data.get_20_80_section()
 
 X = features
 y = y_trues[:,1]
 
-# =============================================================================
+#remove 0
+X=X[y != 0]
+y=y[y != 0]
+
+#%% =============================================================================
 # modeling
 # =============================================================================
 
 # First define the model
-log_reg = LogisticRegression(penalty="none")
+# log_reg = LogisticRegression(penalty="none")
+log_reg = LogisticRegression(penalty="l2", max_iter=1000)
 
 #Then fit it to data
 log_reg.fit(X, y)
@@ -61,8 +67,14 @@ accuracies = cross_val_score(LogisticRegression(penalty='none'), X, y, cv=3) # k
 
 # Get the weight of each feature
 # In other word, the importance of the features in prediction of y
-weights = np.mean(log_reg.coef_, axis=0)
+# weights = np.mean(log_reg.coef_, axis=0)
+weights = log_reg.coef_
 
-# The order of importance: ascending
+    # The order of importance: ascending
 # first: minimum contribution; last: maximum contribution
 sorted_index = np.argsort(np.abs(weights))
+
+# recall
+recalls = cross_val_score(LogisticRegression(penalty='none'), X, y, cv=3, scoring='recall')
+roc = cross_val_score(LogisticRegression(penalty='none'), X, y, cv=3, scoring='roc_auc')
+
