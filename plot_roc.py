@@ -5,8 +5,6 @@ Created on Thu Jul 30 15:48:56 2020
 @author: XIAOWAN
 """
 
-
-import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc  
 import model_fitting
@@ -27,8 +25,8 @@ plt.plot(fpr, tpr, color='darkorange',
 plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
 plt.xlim([0.0, 1.0])
 plt.ylim([0.0, 1.05])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('Trial history effect')
+plt.xlabel('False Positive Rate',fontsize = 15)
+plt.ylabel('True Positive Rate', fontsize = 15)
+plt.title('ROC curve', fontsize = 15)
 plt.legend(loc="lower right")
 plt.show()

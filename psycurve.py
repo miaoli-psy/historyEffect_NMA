@@ -59,3 +59,8 @@ for result, color in zip(dict_results, colors):
 # add axis labels
 ax.set_xlabel('Signed Contrast (%)')
 ax.set_ylabel('Rightward Choice (%)')
+
+
+
+fig.savefig("tes.svg",format = 'svg')
+# plt.savefig("test.png")
